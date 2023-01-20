@@ -1,10 +1,13 @@
-import { parse } from "https://deno.land/x/xml/mod.ts";
+import {parseFeed} from "https://deno.land/x/rss/mod.ts";
 
-const res = await fetch('https://blackflame33.cn/atom.xml');
-const rss = parse(await res.text()).rss! as any;
+const response = await fetch(
+    "https://blackflame33.cn/atom.xml",
+);
+const xml = await response.text();
+const feed = await parseFeed(xml);
 
 const output = [];
-for (const {title, link} of rss.channel.item.slice(0, 5)) {
-  output.push(`# ${title}\r\n${link}\r\n`);
+for (const {content, links} of feed.entries.slice(0, 5)) {
+    output.push(`# ${content.value}\r\n${links[0].href}\r\n`);
 }
 await Deno.stdout.write(new TextEncoder().encode(output.join('\n')));
