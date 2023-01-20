@@ -1,0 +1,30 @@
+name: Update last blog posts
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  rss:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+      - name: Parse RSS
+        run: deno run --allow-net .github/workflows/rss.ts > blog.md
+      - name: Commit changes
+        run: |
+          if [[ -z $(git status -s) ]]
+          then
+            echo "No changes";
+            exit 0;
+          fi
+          
+          git config --local user.email ioprotium@gmail.com
+          git config --local user.name bot
+          git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
+          git add blog.md
+          git commit -m "docs: update last blog posts"
+          git push
