@@ -7,7 +7,7 @@ const xml = await response.text();
 const feed = await parseFeed(xml);
 
 const output = [];
-for (const {content, links} of feed.entries.slice(0, 5)) {
-    output.push(`# ${content.value}\r\n${links[0].href}\r\n`);
+for (const {title, content, links} of feed.entries.slice(0, 5)) {
+    output.push(`# ${title.value}\r\n${content.value}\r\n${links[0].href}\r\n`);
 }
 await Deno.stdout.write(new TextEncoder().encode(output.join('\n')));
