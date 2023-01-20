@@ -1,7 +1,7 @@
 import {getSHELL_PROMPT, HistorySize, SHELL_HISTORY, TermColors} from "./constants.js";
 import fileSystem from "./file-system.js";
 import {colorize, handleBackspace, isPrintableKeyCode, sleep} from "./utils.js";
-import {exec} from "./commands";
+import {exec} from "./commands/index.js";
 
 function printError(term, error) {
     term.write(TermColors.Red + error);
