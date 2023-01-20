@@ -1,93 +1,100 @@
-<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-    />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="google" value="notranslate" />
-    <link
-      rel="preload"
-      href="https://blackflame33.cn/blog.json"
-      as="fetch"
-      crossorigin=""
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      href="https://cdn.jsdelivr.net/gh/BlackFlame33/CDN/source/favicon.png"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/gh/BlackFlame33/CDN/LikourinShell/css/index.css"
-      rel="stylesheet"
-    />
-    <title itemprop="name">BlackFlame33: About me</title>
-    <meta name="theme-color" content="#212121" />
-  </head>
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="no-cache, no-store, must-revalidate" http-equiv="Cache-Control"/>
+    <meta content="no-cache" http-equiv="Pragma"/>
+    <meta content="0" http-equiv="Expires"/>
+    <link href="https://github.com/BlackFlame33" rel="author"/>
+    <link href="./favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+    <link href="./xterm/xterm.css" rel="stylesheet">
+    <title>about me</title>
+    <script src="./xterm/xterm.js"></script>
+    <script src="./xterm/xterm-addon-fit.js"></script>
+    <script src="./xterm/xterm-addon-web-links.js"></script>
+    <style media="screen">
+        @font-face {
+            font-family: 'Fira Code';
+            src: url('./fonts/FiraCode-Regular-Nerd-Font.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
 
-  <body>
-    <div id="main">
-      <span style="color: red"
-        ><a
-          style="color: red"
-          target="_blank"
-          rel="noopener"
-          href="https://github.com/BlackFlame33/aboutme/issues"
-          >#issue</a
-        >: 目前 send message 功能还不知道如何实现。。。若大佬有方法的话还欢迎交流！<br
-      /></span>
-      2023.01.01: 准备使用<a target="_blank" rel="noopener" href="https://github.com/xtermjs/xterm.js">xterm.js
-</a>重新写一个终端页面。<br></br/>
-      Hi~, welcome to LikourinShell and this page was inspired by
-      <a target="_blank" rel="noopener" href="http://axton.cc">axton</a>.<br />
-      I'm BlackFlame33, a student from China, currently studying in CDUESTC.<br />Try
-      to find more infomation about me!<br />Type 'help' to get help.<br />Have
-      fun :-)<br /><br />
-      <span class="info">LikourinShell 1.0.0<br />Based on BASH</span><br />
-      <div class="content"></div>
-      <div class="input-lable">
-        <span class="prefix"
-          ><span>[</span><span id="usr">usr</span><span>@BlackFlame33 </span
-          ><span id="position">~</span><span>]#</span></span
-        ><span class="preblank">&nbsp;</span
-        ><span class="precolor">Type the number of the color:&nbsp;</span
-        ><span class="preoption">Type the number of the option:&nbsp;</span
-        ><span class="preleave">Type a message:&nbsp;</span
-        ><span
-          class="input-text"
-          contenteditable=""
-          spellcheck="false"
-          autocomplete="off"
-          autocorrect="off"
-          style="padding-right: 45px"
-        ></span
-        ><span id="ac-tip"></span><span class="catmode">&nbsp;</span>
-        <div class="soft-keyboard-fill soft-keyboard"></div>
-      </div>
-      <div class="soft-keyboard-self soft-keyboard">
-        <div id="c-c" class="key">Ctrl-C</div>
-        <div class="lan-div"></div>
-        <div id="enter" class="key">Enter</div>
-        <div class="lan-div"></div>
-        <div id="tab" class="key">Tab</div>
-        <div class="lan-div"></div>
-        <div id="up" class="key">↑</div>
-        <div class="lan-div"></div>
-        <div id="down" class="key">↓</div>
-      </div>
-      <div class="con-lost">
-        <div>
-          <span class="con-lost-text">Connection Lost</span><br /><span
-            class="retry"
-            >Enter to reconnect</span
-          >
-        </div>
-      </div>
-      <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/gh/BlackFlame33/CDN@latest/LikourinShell/js/index.js"></script>
+        :root {
+            --color-highlight: #c115c7;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: white;
+            margin: 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0;
+        }
+
+        .content {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            min-width: 700px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                justify-content: flex-start;
+            }
+        }
+
+        .content .terminal-container {
+            -webkit-box-shadow: 5px 5px 5px #cf442b;
+            box-shadow: 5px 5px 5px #cf442b;
+            border: 2px solid var(--color-highlight);
+            overflow: hidden;
+            padding: 1px;
+            flex-shrink: 0;
+            box-sizing: border-box;
+            max-width: 100%;
+            position: relative;
+        }
+
+        .xterm *::-webkit-scrollbar {
+            display: none;
+            position: relative;
+        }
+
+        #term {
+            padding: 4px;
+        }
+
+        .xterm * {
+            scrollbar-width: none;
+        }
+
+        #downlad {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<noscript>
+    You need to enable JavaScript to run this app.
+</noscript>
+<main class="content">
+    <div class="terminal-container">
+        <div id="term"></div>
     </div>
-  </body>
+    <a href="" id="download"></a>
+</main>
+<script src="./app/main.js" type="module"></script>
+</body>
 </html>
