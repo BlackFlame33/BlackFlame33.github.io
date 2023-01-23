@@ -84,6 +84,30 @@
             display: none;
         }
     </style>
+    <!-- 百度统计 -->
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?1510d744a3352c49d1aafe7a980b7bfa";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q4X033964S"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q4X033964S');
+    </script>
 </head>
 <body>
 <noscript>
@@ -96,5 +120,6 @@
     <a href="" id="download"></a>
 </main>
 <script src="./app/main.js" type="module"></script>
+
 </body>
 </html>
