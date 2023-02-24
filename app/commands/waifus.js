@@ -7,7 +7,7 @@ const api = 'https://api.waifu.pics/sfw/waifu';
 
 const waifus = {
     id: "waifus",
-    description: 'wanna see my waifu? Well, never gonna let you down~',
+    description: 'never gonna let you down~',
     args: 0,
     async exec(term, _args) {
         term.writeln(colorize(TermColors.Green, 'Soul soul = new Soul(blackflame33.heart)...'));
