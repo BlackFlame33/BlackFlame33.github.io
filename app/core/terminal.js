@@ -59,20 +59,43 @@ export function createTerminal(container) {
     term.loadAddon(new WebLinksAddon());
 
     term.open(container);
-    fitAddon.fit();
 
-    // Re-scale the font and re-fit on viewport changes, debounced via rAF.
-    // On desktop the size stays 20, so the equality guard prevents any reflow.
+    // The bordered box shrink-wraps the terminal, so fitAddon.fit() — which
+    // measures that box — would feed the terminal's own width back into the
+    // next fit and ratchet it narrower on every call. On mobile this is very
+    // visible: hiding the address bar by scrolling fires a resize, so the
+    // terminal shrank on every swipe. Resetting to the default column count
+    // first lets the box expand back to the real available width before
+    // measuring; the result is stable and identical to before on desktop.
+    const DEFAULT_COLS = 80;
+
+    function safeFit() {
+        term.resize(DEFAULT_COLS, term.rows);
+        fitAddon.fit();
+    }
+
+    safeFit();
+
+    // Re-fit only when the viewport WIDTH (or font size) actually changes.
+    // Height-only changes — mobile address bar showing/hiding during a scroll —
+    // must not trigger a re-fit, debounced via rAF.
     let raf = null;
+    let lastWidth = window.innerWidth;
 
     function onViewportChange() {
         if (raf) cancelAnimationFrame(raf);
         raf = requestAnimationFrame(() => {
+            const width = window.innerWidth;
             const fontSize = computeFontSize();
-            if (term.options.fontSize !== fontSize) {
+            const fontChanged = term.options.fontSize !== fontSize;
+            if (width === lastWidth && !fontChanged) {
+                return;
+            }
+            lastWidth = width;
+            if (fontChanged) {
                 term.options.fontSize = fontSize;
             }
-            fitAddon.fit();
+            safeFit();
         });
     }
 
@@ -81,7 +104,7 @@ export function createTerminal(container) {
 
     // Re-fit once the web font has loaded to avoid a first-frame metric glitch.
     if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(() => fitAddon.fit());
+        document.fonts.ready.then(() => safeFit());
     }
 
     return term;
