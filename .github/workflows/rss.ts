@@ -1,4 +1,4 @@
-import {parseFeed} from "https://deno.land/x/rss/mod.ts";
+import {parseFeed} from "https://deno.land/x/rss@1.1.3/mod.ts";
 
 const response = await fetch(
     "https://blackflame33.cn/atom.xml",

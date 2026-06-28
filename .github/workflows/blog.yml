@@ -10,10 +10,10 @@ jobs:
   rss:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: denoland/setup-deno@v1
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
         with:
-          deno-version: vx.x.x
+          deno-version: v2.9.0
       - name: Parse RSS
         run: deno run --allow-net .github/workflows/rss.ts > blog.md
       - name: Commit changes
