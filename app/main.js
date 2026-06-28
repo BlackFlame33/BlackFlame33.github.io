@@ -1,7 +1,8 @@
-import {getSHELL_PROMPT, HistorySize, SHELL_HISTORY, TermColors} from "./constants.js";
-import fileSystem from "./file-system.js";
-import {colorize, handleBackspace, isPrintableKeyCode, sleep} from "./utils.js";
-import {exec} from "./commands/index.js";
+import {getSHELL_PROMPT, HistorySize, SHELL_HISTORY, TermColors} from "./core/constants.js";
+import fileSystem from "./core/file-system.js";
+import {colorize, handleBackspace, isPrintableKeyCode, sleep} from "./core/utils.js";
+import {createTerminal} from "./core/terminal.js";
+import {exec, getCommand} from "./commands/index.js";
 
 function printError(term, error) {
     term.write(TermColors.Red + error);
@@ -134,14 +135,15 @@ function createOnKeyHandler(term) {
                     prompt(term);
                     return;
                 }
-                // TO-DO : 重复定义 clear 命令，期待后续改进。
-                if (userInput === "clear") {
-                    term.clear();
-                    term.write("\r" + getSHELL_PROMPT());
-                    userInput = "";
-                    return;
+                // Commands that manage their own prompt (e.g. clear) own the
+                // whole line flow: skip both the history echo and the trailing
+                // prompt so the screen looks exactly as they drew it.
+                const command = getCommand(userInput);
+                const managesPrompt = command !== null && command.managesPrompt === true;
+
+                if (!managesPrompt) {
+                    promptHistory(term);
                 }
-                promptHistory(term);
                 try {
                     currentProcessId = await exec(term, userInput, onProcessExit);
                 } catch (e) {
@@ -151,7 +153,7 @@ function createOnKeyHandler(term) {
                 pushCommandToHistory(commandHistory, userInput);
                 currentHistoryPosition = commandHistory.length;
                 userInput = "";
-                if (currentProcessId === null) {
+                if (currentProcessId === null && !managesPrompt) {
                     prompt(term);
                 }
                 return;
@@ -169,44 +171,7 @@ function createOnKeyHandler(term) {
 
 async function runTerminal() {
     const container = document.getElementById("term");
-    const term = new Terminal({
-        cursorBlink: "block",
-        scrollback: 1000,
-        tabStopWidth: 4,
-        fontFamily: "'Fira Code', monospace",
-        fontSize: 20,
-        theme: {
-            background: "#282a36",
-            // Current Line
-            selection: "#44475a",
-            foreground: "#f8f8f2",
-            // Comment
-            cyan: "#8be9fd",
-            brightCyan: "#8be9fd",
-            green: "#50fa7b",
-            brightGreen: "#50fa7b",
-            // Orange
-            // Pink
-            // Purple
-            cursor: "#cccccc",
-            cursorAccent: "#c7157a",
-            brightMagenta: "#c7157a",
-            red: "#ff5555",
-            brightRed: "#ff5555",
-            yellow: "#f1fa8c",
-            brightYellow: "#f1fa8c",
-            // [16]Orange, [17]Pink, [18]Purple
-            // extendedAnsi: ['#ffb86c','#ff79c6','#bd93f9'],
-        },
-    });
-
-    const fitAddon = new window.FitAddon.FitAddon();
-    term.loadAddon(fitAddon);
-    term.loadAddon(new window.WebLinksAddon.WebLinksAddon());
-
-    term.open(container);
-
-    fitAddon.fit();
+    const term = createTerminal(container);
     term.focus();
 
     await initTerminalSession(term);

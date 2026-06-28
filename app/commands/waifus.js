@@ -1,5 +1,5 @@
-import {SHELL_HISTORY, TermColors} from "../constants.js";
-import {colorize, sleep} from "../utils.js";
+import {SHELL_HISTORY, TermColors} from "../core/constants.js";
+import {colorize, sleep} from "../core/utils.js";
 
 // const api = 'https://api.btstu.cn/sjbz/api.php?lx=dongman&format=json';
 const api = 'https://api.waifu.pics/sfw/waifu';

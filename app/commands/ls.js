@@ -1,4 +1,4 @@
-import fileSystem from "../file-system.js";
+import fileSystem from "../core/file-system.js";
 
 const ls = {
     id: "ls",

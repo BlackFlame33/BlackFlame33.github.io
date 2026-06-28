@@ -1,6 +1,6 @@
-import {TermColors} from "../constants.js";
-import fileSystem from "../file-system.js";
-import {colorize} from "../utils.js";
+import {TermColors} from "../core/constants.js";
+import fileSystem from "../core/file-system.js";
+import {colorize} from "../core/utils.js";
 
 const cat = {
     id: "cat",

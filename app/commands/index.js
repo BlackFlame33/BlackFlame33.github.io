@@ -1,5 +1,5 @@
-import {TermColors} from "../constants.js";
-import {colorize, getSpacing} from "../utils.js";
+import {TermColors} from "../core/constants.js";
+import {colorize, getSpacing} from "../core/utils.js";
 
 import cat from "./cat.js";
 import echo from "./echo.js";
@@ -80,6 +80,15 @@ const SystemCommands = [
         },
     },
 ];
+
+/**
+ * Resolve the command object for a raw input line, or null if unknown.
+ * @returns {object|null}
+ */
+export function getCommand(userInput) {
+    const [input] = userInput.split(/\s+/);
+    return SystemCommands.find((c) => c.id === input) || null;
+}
 
 /**
  * @returns {string|null} Process ID if command executed started a process

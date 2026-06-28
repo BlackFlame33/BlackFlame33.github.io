@@ -46,11 +46,12 @@ export function isPrintableKeyCode(keyCode) {
 export function handleBackspace(term, input) {
     if (input.length === 0) return input;
 
-    if (term._core.buffer.x === 0 && term._core.buffer.y > 1) {
+    const buffer = term.buffer.active;
+    if (buffer.cursorX === 0 && buffer.cursorY > 0) {
         // Move up
         term.write("\x1b[A");
         // Move to the end
-        term.write("\x1b[" + term._core.buffer._cols + "G");
+        term.write("\x1b[" + term.cols + "G");
         term.write(" ");
     } else {
         term.write("\b \b");

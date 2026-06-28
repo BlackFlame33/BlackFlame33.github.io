@@ -1,6 +1,6 @@
-import fileSystem from '../file-system.js';
-import {TermColors} from '../constants.js';
-import {colorize} from '../utils.js';
+import fileSystem from '../core/file-system.js';
+import {TermColors} from '../core/constants.js';
+import {colorize} from '../core/utils.js';
 
 function parseGlobPattern(pattern) {
     switch (pattern) {
