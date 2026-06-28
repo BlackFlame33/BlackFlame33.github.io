@@ -1,6 +1,6 @@
-import {TermColors} from "../constants.js";
-import {colorize, sleep} from "../utils.js";
-import fileSystem from "../file-system.js";
+import {TermColors} from "../core/constants.js";
+import {colorize, sleep} from "../core/utils.js";
+import fileSystem from "../core/file-system.js";
 
 const WebApps = [
     {

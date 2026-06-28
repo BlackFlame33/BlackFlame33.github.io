@@ -1,4 +1,4 @@
-import {getSpacing} from "../utils.js";
+import {getSpacing} from "../core/utils.js";
 
 const say = {
     id: "say",

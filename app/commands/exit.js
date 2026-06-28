@@ -1,4 +1,4 @@
-import {sleep} from "../utils.js";
+import {sleep} from "../core/utils.js";
 
 const exit = {
     id: "exit",

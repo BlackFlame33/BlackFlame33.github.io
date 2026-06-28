@@ -1,5 +1,5 @@
-import {TermColors} from "../constants.js";
-import {colorize} from "../utils.js";
+import {TermColors} from "../core/constants.js";
+import {colorize} from "../core/utils.js";
 
 const LAST_UPDATE = "2023-2-24";
 

@@ -1,0 +1,82 @@
+@font-face {
+    font-family: 'Fira Code';
+    src: url('../fonts/FiraCode-Regular-Nerd-Font.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+:root {
+    --color-highlight: #c115c7;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    color: white;
+    margin: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0;
+}
+
+.content {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    min-width: 0;
+}
+
+/* Desktop keeps the original 700px floor; phones no longer overflow horizontally. */
+@media (min-width: 769px) {
+    .content {
+        min-width: 700px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .content {
+        padding: 12px;
+    }
+}
+
+.content .terminal-container {
+    -webkit-box-shadow: 5px 5px 5px #cf442b;
+    box-shadow: 5px 5px 5px #cf442b;
+    border: 2px solid var(--color-highlight);
+    overflow: hidden;
+    padding: 1px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    max-width: 100%;
+    position: relative;
+}
+
+.xterm *::-webkit-scrollbar {
+    display: none;
+    position: relative;
+}
+
+#term {
+    padding: 4px;
+}
+
+.xterm * {
+    scrollbar-width: none;
+}
+
+#download {
+    display: none;
+}

@@ -1,5 +1,5 @@
-import {TermColors} from "../constants.js";
-import {colorize} from "../utils.js";
+import {TermColors} from "../core/constants.js";
+import {colorize} from "../core/utils.js";
 
 let info = colorize(TermColors.Green, "User Agent: ");
 info += navigator.userAgent + "\r\n";

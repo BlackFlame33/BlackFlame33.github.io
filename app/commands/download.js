@@ -1,6 +1,6 @@
-import fileSystem from "../file-system.js";
-import {TermColors} from "../constants.js";
-import {colorize, downloadFile, sleep} from "../utils.js";
+import fileSystem from "../core/file-system.js";
+import {TermColors} from "../core/constants.js";
+import {colorize, downloadFile, sleep} from "../core/utils.js";
 
 const download = {
     id: "download",
